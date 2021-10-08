@@ -33,7 +33,28 @@ function criarCobrinha(){
     }
 }
 
+/*capta o toque da tecla (evento de clique) e transmite o respectivo código para a função "update" */
+document.addEventListener("keydown", update);
+
+/*37 - esquerda, 38 - cima, 39 - direita, 40- baixo*/
+/*função que atualiza o sentido do movimento; código da tecla não deve ser correspondente ao sentido oposto*/
+function update(event){
+    if(event.keyCode == 37 && direction != "right") direction = "left";
+    if(event.keyCode == 38 && direction != "down") direction = "up";
+    if(event.keyCode == 39 && direction != "left") direction = "right";
+    if(event.keyCode == 40 && direction != "up") direction = "down";  
+
+}
+
+
 function iniciarJogo(){
+
+    /*define condicional para cobrinha voltar ao início do eixo ao ultrapassar limite do canvas*/
+    if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
+    if(snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
+    if(snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
+    if(snake[0].y < 0 && direction == "up") snake[0].y = 16 * box;
+
     criarBG();
     criarCobrinha();
 
@@ -62,3 +83,4 @@ function iniciarJogo(){
 
 /*função que atualiza função iniciarJogo a cada 100 ms, dando continuidade ao jogo*/
 let jogo = setInterval(iniciarJogo, 100)
+
