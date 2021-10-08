@@ -55,13 +55,10 @@ function update(event){
     if(event.keyCode == 37 && direction != "right") direction = "left";
     if(event.keyCode == 38 && direction != "down") direction = "up";
     if(event.keyCode == 39 && direction != "left") direction = "right";
-    if(event.keyCode == 40 && direction != "up") direction = "down";  
-
+    if(event.keyCode == 40 && direction != "up") direction = "down";
 }
 
-
 function iniciarJogo(){
-
     /*define condicional para cobrinha voltar ao início do eixo ao ultrapassar limite do canvas*/
     if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
     if(snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
@@ -72,26 +69,32 @@ function iniciarJogo(){
     criarCobrinha();
     drawFood();
 
-    /*define ponto de partida da cobrinha*/
+    /*define variáveis ponto de partida da cobrinha*/
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
 
-    /*define condicionais a partir do sentido de movimento da cobrinha
-    desloca a posição da cobra somando o valor do box de um lado e subtraindo do outro*/
+    /*define condicionais do movimento da cobrinha; adiciona ou subtrai o valor de 1 "box" ao eixo da cobra, de acordo com o sentido do seu movimento*/
     if(direction == "right") snakeX += box;
     if(direction == "left") snakeX -= box;
     if(direction == "up") snakeY -= box;
     if(direction == "down") snakeY += box;
 
-    /*retira último index do array "snake"*/
-    snake.pop();
-
-    /*adiciona uma nova cabeça onde estiver a cobra*/
+    /*define condicionais para aumento da cobrinha e nova comida*/
+    if(snakeX != food.x || snakeY != food.y){
+        /*retira último index do array "snake"*/
+        snake.pop();
+    }
+    else{
+        food.x = Math.floor(Math.random() * 15 + 1) * box;
+        food.y = Math.floor(Math.random() * 15 + 1) * box;
+    } 
+    
+    /*adiciona uma nova cabeça da cobra*/    
     let newHead = {
         x: snakeX,
         y: snakeY,
     }
-
+    
     snake.unshift(newHead)
 }
 
