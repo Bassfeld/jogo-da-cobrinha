@@ -12,6 +12,9 @@ snake[0] = {
     y: 8 * box,
 }
 
+/*variável que define o sentido padrão de movimento da cobra*/
+let direction = "right";
+
 /*função que define o canvas (background)*/
 function criarBG() {
     /*define cor*/
@@ -30,5 +33,32 @@ function criarCobrinha(){
     }
 }
 
-criarBG();
-criarCobrinha();
+function iniciarJogo(){
+    criarBG();
+    criarCobrinha();
+
+    /*define ponto de partida da cobrinha*/
+    let snakeX = snake[0].x;
+    let snakeY = snake[0].y;
+
+    /*define condicionais a partir do sentido de movimento da cobrinha
+    desloca a posição da cobra somando o valor do box de um lado e subtraindo do outro*/
+    if(direction == "right") snakeX += box;
+    if(direction == "left") snakeX -= box;
+    if(direction == "up") snakeY -= box;
+    if(direction == "down") snakeY += box;
+
+    /*retira último index do array "snake"*/
+    snake.pop();
+
+    /*adiciona uma nova cabeça onde estiver a cobra*/
+    let newHead = {
+        x: snakeX,
+        y: snakeY,
+    }
+
+    snake.unshift(newHead)
+}
+
+/*função que atualiza função iniciarJogo a cada 100 ms, dando continuidade ao jogo*/
+let jogo = setInterval(iniciarJogo, 100)
