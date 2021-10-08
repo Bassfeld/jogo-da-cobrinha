@@ -2,8 +2,8 @@
 let canvas = document.getElementById("snake");
 /*define a renderização que vai ocorrer no canvas em 2D*/
 let context = canvas.getContext("2d");
+/*variável padrão para tamanho da caixa*/
 let box = 32;
-
 /*define variável snake como array*/
 let snake = [];
 /*define posição e tamanho (px) da array snake*/
@@ -12,8 +12,16 @@ snake[0] = {
     y: 8 * box,
 }
 
+/*define variável array para função de desenhar comida drawFood*/
+let food = {
+    /*Math.floor: retira parte flutuante. Math.random: número aleatório*/
+    x: Math.floor(Math.random() * 15 + 1) * box,
+    y: Math.floor(Math.random() * 15 + 1) * box,
+}
+
 /*variável que define o sentido padrão de movimento da cobra*/
 let direction = "right";
+
 
 /*função que define o canvas (background)*/
 function criarBG() {
@@ -31,6 +39,11 @@ function criarCobrinha(){
         /*preenche o retângulo com o tamanho da cobra: x e y de cada index e tamanho do quadradinho (box)*/
         context.fillRect(snake[i].x, snake[i].y, box, box);
     }
+}
+
+function drawFood(){
+    context.fillStyle = "red";
+    context.fillRect(food.x, food.y, box, box)
 }
 
 /*capta o toque da tecla (evento de clique) e transmite o respectivo código para a função "update" */
@@ -57,6 +70,7 @@ function iniciarJogo(){
 
     criarBG();
     criarCobrinha();
+    drawFood();
 
     /*define ponto de partida da cobrinha*/
     let snakeX = snake[0].x;
